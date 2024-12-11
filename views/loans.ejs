@@ -1,0 +1,229 @@
+<!DOCTYPE html> 
+<html lang="en"> 
+    <head> 
+        <meta charset="UTF-8"> 
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+        <title>Loans</title> 
+        <link rel="stylesheet" href="/public/styles.css"> <!-- Link to your CSS file --> 
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"> 
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script> 
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script> 
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script> 
+    </head> 
+    <body> 
+        <div class="dashboard-container"><%- include('partials/sidebar') %> <!-- Include sidebar for navigation --> 
+            <div class="main-content"> 
+                <header class="header"> 
+                    <h1>Loans</h1> 
+                    <button class="btn btn-success" data-toggle="modal" data-target="#loanApplicationModal">New Application</button> 
+                    <input type="text" id="searchID" placeholder="Search ID Number..." class="form-control" style="width: 300px; display: inline-block; margin-left: 20px;"> 
+                </header>
+                <div class="content">
+                    <table class="table table-striped mt-3">
+                        <thead>
+                            <tr>
+                                <th>ID Number</th>
+                                <th>Loan Product</th>
+                                <th>Principal Amount</th>
+                                <th>Interest Amount</th>
+                                <th>Processing Fee</th>
+                                <th>Loan Amount</th>
+                                <th>Loan Duration</th>
+                                <th>Guarantor 1</th>
+                                <th>Guarantor 2</th>
+                                <th>Active Loans</th>
+                                <th>Loan Status</th>
+                                <th>Date Disbursed</th>
+                                <th>First Installment Date</th>
+                                <th>Officer Note</th>
+                            </tr>
+                        </thead>
+                        <tbody id="loanTableBody">
+                            <!-- Loan application rows will be dynamically inserted here -->
+                            <% if (loans && loans.length > 0) { %>
+                                <% loans.forEach(loan => { %>
+                                    <tr>
+                                        <td><%= loan.idNumber %></td>
+                                        <td><%= loan.loanProduct %></td>
+                                        <td><%= loan.principalAmount %></td>
+                                        <td><%= loan.interestAmount %></td>
+                                        <td><%= loan.processingFee %></td>
+                                        <td><%= loan.loanAmount %></td>
+                                        <td><%= loan.loanDuration %></td>
+                                        <td><%= loan.guarantor1 %></td>
+                                        <td><%= loan.guarantor2 %></td>
+                                        <td><%= loan.activeLoans %></td>
+                                        <td><%= loan.loanStatus %></td>
+                                        <td><%= loan.dateDisbursed.toLocaleDateString() %></td>
+                                        <td><%= loan.firstInstallmentDate.toLocaleDateString() %></td>
+                                        <td><%= loan.officerNotes %></td>
+                                    </tr>
+                                <% }); %>
+                            <% } else { %>
+                                <tr>
+                                    <td colspan="14" class="text-center">No loan applications available.</td>
+                                </tr>
+                            <% } %>
+                        </tbody>
+                    </table>
+                    <nav aria-label="Page navigation">
+                        <ul class="pagination">
+                            <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+                            <li class="page-item"><a class="page-link" href="#">1</a></li>
+                            <li class="page-item"><a class="page-link" href="#">2</a></li>
+                            <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Loan Application Modal -->
+        <div class="modal fade" id="loanApplicationModal" tabindex="-1" role="dialog" aria-labelledby="loanApplicationModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="loanApplicationModalLabel">Loan Application Form</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="loanApplicationForm">
+                            <div class="form-group">
+                                <label for="idNumber">ID Number</label>
+                                <input type="text" class="form-control" id="idNumber" name="idNumber" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="loanProduct">Loan Product</label>
+                                <select class="form-control" id="loanProduct" name="loanProduct" required>
+                                    <option value="Regular Loan">Regular Loan</option>
+                                    <option value="Special Loan">Special Loan</option>
+                                    <option value="SME Loan">SME Loan</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="principalAmount">Principal Amount</label>
+                                <input type="number" class="form-control" id="principalAmount" name="principalAmount" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="interestAmount">Interest Amount</label>
+                                <input type="number" class="form-control" id="interestAmount" name="interestAmount" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="processingFee">Processing Fee</label>
+                                <input type="number" class="form-control" id="processingFee" name="processingFee" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="loanAmount">Loan Amount</label>
+                                <input type="number" class="form-control" id="loanAmount" name="loanAmount" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="loanDuration">Loan Duration (months)</label>
+                                <input type="number" class="form-control" id="loanDuration" name="loanDuration" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="guarantor1">Guarantor 1</label>
+                                <input type="text" class="form-control" id="guarantor1" name="guarantor1" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="guarantor2">Guarantor 2</label>
+                                <input type="text" class="form-control" id="guarantor2" name="guarantor2" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="activeLoans">Active Loans</label>
+                                <select class="form-control" id="activeLoans" name="activeLoans" required>
+                                    <option value="Yes">Yes</option>
+                                    <option value="No">No</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="loanStatus">Loan Status</label>
+                                <select class="form-control" id="loanStatus" name="loanStatus" required>
+                                    <option value="Approved">Approved</option>
+                                    <option value="Processing">Processing</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="dateDisbursed">Date Disbursed</label>
+                                <input type="date" class="form-control" id="dateDisbursed" name="dateDisbursed" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="firstInstallmentDate">First Installment Date</label>
+                                <input type="date" class="form-control" id="firstInstallmentDate" name="firstInstallmentDate" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="applicationForm">Application Form (Upload)</label>
+                                <input type="file" class="form-control" id="applicationForm" name="applicationForm" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="officerNote">Officer Note</label>
+                                <textarea class="form-control" id="officerNote" name="officerNote" rows="3"></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-success">Apply</button>
+                        </form>
+                    </div>
+        
+        <script>
+    // Handle form submission
+    document.getElementById('loanApplicationForm').addEventListener('submit', function(event) {
+        event.preventDefault(); // Prevent default form submission
+
+        // Create a FormData object to handle file uploads
+        const formData = new FormData(this); // 'this' refers to the form element
+
+        // Validation logic
+        let isValid = true;
+        let errorMessage = '';
+
+        // Example validation checks
+        if (!formData.get('idNumber') || formData.get('idNumber').trim() === '') {
+            isValid = false;
+            errorMessage += 'ID Number is required.\n';
+        }
+        if (!formData.get('loanProduct') || formData.get('loanProduct').trim() === '') {
+            isValid = false;
+            errorMessage += 'Loan Product is required.\n';
+        }
+        if (!formData.get('principalAmount') || isNaN(formData.get('principalAmount')) || parseFloat(formData.get('principalAmount')) <= 0) {
+            isValid = false;
+            errorMessage += 'Principal Amount must be a positive number.\n';
+        }
+        if (!formData.get('loanDuration') || isNaN(formData.get('loanDuration')) || parseInt(formData.get('loanDuration'), 10) <= 0) {
+            isValid = false;
+            errorMessage += 'Loan Duration must be a positive number.\n';
+        }
+
+        // If validation fails, show error messages
+        if (!isValid) {
+            alert(errorMessage); // Show error messages
+            return; // Stop further execution
+        }
+
+        // If valid, log the form data for debugging
+        console.log('Form Data Submitted:', Object.fromEntries(formData.entries()));
+
+        // Example of sending data to the server
+        fetch('/apply-loan', { // Ensure this matches your server endpoint
+            method: 'POST',
+            body: formData // Send the FormData object directly
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log('Success:', data);
+            alert('Loan application submitted successfully!'); // Notify user of success
+            // Optionally, you can close the modal or reset the form here
+            document.getElementById('loanApplicationForm').reset(); // Reset form fields
+            $('#loanApplicationModal').modal('hide'); // Hide the modal (if using Bootstrap)
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+            alert('There was an error submitting your application. Please try again.'); // Notify user of error
+        });
+    });
+</script>

@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Products</title>
+    <link rel="stylesheet" href="/styles.css"> <!-- Link to your CSS file --> 
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"> 
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script> 
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script> 
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script> 
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <%- include('partials/sidebar') %>
+                
+        <div class="main-content">
+            <header class="header">
+                <h1>Products</h1>
+                <p>Welcome to the products page. Here you can view and manage your products.</p>
+                <button class="btn btn-success" id="addProductBtn" data-toggle="modal" data-target="#addProductModal">Add Product</button>
+                <input type="text" id="searchProduct" placeholder="Search Product..." class="form-control" style="width: 300px; display: inline-block; margin-left: 20px;">
+            </header>
+            
+            <div class="content">
+                <% if (successMessage) { %>
+                    <div class="alert alert-success">
+                        <%= successMessage %>
+                    </div>
+                <% } %>
+                <table class="table table-striped mt-3">
+                    <thead>
+                        <tr>
+                            <th>Loan Name</th>
+                            <th>Interest (%)</th>
+                            <th>Duration (months)</th>
+                            <th>Processing Fee</th>
+                            <th>Max Limit</th>
+                            <th>Min Limit</th>
+                            <th>Guarantors</th>
+                            <th>Savings</th>
+                            <th>Application Method</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody id="productTableBody">
+                        <% products.forEach(product => { %>
+                            <tr>
+                                <td><%= product.loanName %></td>
+                                <td><%= product.loanInterest %></td>
+                                <td><%= product.loanDuration %></td>
+                                <td><%= product.processingFee %></td>
+                                <td><%= product.maxLimit %></td>
+                                <td><%= product.minLimit %></td>
+                                <td><%= product.guarantor %></td>
+                                <td><%= product.savings %></td>
+                                <td><%= product.applicationMethod %></td>
+                                <td><%= product.description %></td>
+                            </tr>
+                        <% }) %>
+                    </tbody>
+                </table>
+                <nav aria-label="Page navigation">
+                    <ul class="pagination">
+                        <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+                        <li class="page-item"><a class="page-link" href="#">1</a></li>
+                        <li class="page-item"><a class="page-link" href="#">2</a></li>
+                        <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div> <!-- Closing main-content -->
+    </div> <!-- Closing dashboard-container -->
+</body>
+</html>
+    <!-- Add Product Modal -->
+<div class="modal fade" id="addProductModal" tabindex="-1" role="dialog" aria-labelledby="addProductModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addProductModalLabel">Add Product</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="addProductForm">
+                    <div class="form-group">
+                        <label for="loanName">Loan Name</label>
+                        <input type="text" class="form-control" id="loanName" name="loanName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="loanInterest">Loan Interest</label>
+                        <input type="number" class="form-control" id="loanInterest" name="loanInterest" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="loanDuration">Loan Duration</label>
+                        <input type="number" class="form-control" id="loanDuration" name="loanDuration" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="processingFee">Processing Fee</label>
+                        <input type="number" class="form-control" id="processingFee" name="processingFee" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="maxLimit">Maximum Limits</label>
+                        <input type="number" class="form-control" id="maxLimit" name="maxLimit" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="minLimit">Minimum Limits</label>
+                        <input type="number" class="form-control" id="minLimit" name="minLimit" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="guarantor">Guarantor</label>
+                        <select class="form-control" id="guarantor" name="guarantor">
+                            <option value="Yes">Yes</option>
+                            <option value="No">No</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="savings">Savings</label>
+                        <select class="form-control" id="savings" name="savings">
+                            <option value="Yes">Yes</option>
+                            <option value="No">No</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="applicationMethod">Application Method</label>
+                        <select class="form-control" id="applicationMethod" name="applicationMethod">
+                            <option value="Online Form">Online Form</option>
+                            <option value="Physical Form">Physical Form</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="description">Description</label>
+                        <textarea class="form-control" id="description" name="description" rows="3" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Add Product</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>  
+    
+<script>
+    document.getElementById('addProductForm').addEventListener('submit', function(e) {
+        e.preventDefault(); // Prevent default form submission
+
+        // Capture form data
+        const productData = {
+            loanName: document.getElementById('loanName').value,
+            loanInterest: Number(document.getElementById('loanInterest').value), // Convert to Number
+            loanDuration: Number(document.getElementById('loanDuration').value), // Convert to Number
+            processingFee: Number(document.getElementById('processingFee').value), // Convert to Number
+            maxLimit: Number(document.getElementById('maxLimit').value), // Convert to Number
+            minLimit: Number(document.getElementById('minLimit').value), // Convert to Number
+            guarantor: document.getElementById('guarantor').value === 'Yes', // Convert to Boolean
+            savings: document.getElementById('savings').value === 'Yes', // Convert to Boolean
+            applicationMethod: document.getElementById('applicationMethod').value,
+            description: document.getElementById('description').value,
+        };
+
+        // Send data to the server
+        fetch('/add-product', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(productData),
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert('Product added successfully!'); // Success message
+                // Update the product table
+                const newRow = `
+                    <tr>
+                        <td>${data.product.loanName}</td>
+                        <td>${data.product.loanInterest}</td>
+                        <td>${data.product.loanDuration}</td>
+                        <td>${data.product.processingFee}</td>
+                        <td>${data.product.maxLimit}</td>
+                        <td>${data.product.minLimit}</td>
+                        <td>${data.product.guarantor}</td>
+                        <td>${data.product.savings}</td>
+                        <td>${data.product.applicationMethod}</td>
+                        <td>${data.product.description}</td>
+                    </tr>
+                `;
+                document.getElementById('productTableBody').insertAdjacentHTML('beforeend', newRow);
+                $('#addProductModal').modal('hide'); // Hide the modal
+                document.getElementById('addProductForm').reset(); // Reset the form
+            } else {
+                alert('Failed to add product: ' + data.message); // Error message
+            }
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+            alert('An error occurred while adding the product.');
+        });
+    });
+</script>

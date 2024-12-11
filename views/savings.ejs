@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Savings Page</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        .modal-header {
+            background-color: #007bff;
+            color: white;
+        }
+        .modal-footer .btn {
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <h1>Savings Management</h1>
+        <button class="btn btn-primary" data-toggle="modal" data-target="#addSavingsModal">Add Savings</button>
+        <button class="btn btn-secondary" data-toggle="modal" data-target="#importSavingsModal">Import Savings</button>
+        <input type="text" id="searchId" placeholder="Search ID Number" class="form-control mt-3 mb-3" />
+        
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>ID Number</th>
+                    <th>Member's Name</th>
+                    <th>Contact</th>
+                    <th>Served By</th>
+                    <th>Ref. Number</th>
+                    <th>Amount</th>
+                    <th>Date</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody id="savingsTableBody">
+                <!-- Savings records will be populated here -->
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Add Savings Modal -->
+    <div class="modal fade" id="addSavingsModal" tabindex="-1" role="dialog" aria-labelledby="addSavingsModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addSavingsModalLabel">Add New Savings</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="addSavingsForm">
+                        <div class="form-group">
+                            <label for="addIdNumber">ID Number</label>
+                            <input type="text" class="form-control" id="addIdNumber" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="addMemberName">Member's Name</label>
+                            <input type="text" class="form-control" id="addMemberName" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="addContact">Contact</label>
+                            <input type="text" class="form-control" id="addContact" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="addServedBy">Served By</label>
+                            <input type="text" class="form-control" id="addServedBy" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="addAmount">Amount</label>
+                            <input type="number" class="form-control" id="addAmount" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="addDateReceived">Date Received</label>
+                            <input type="date" class="form-control" id="addDateReceived" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="addPaymentMethod">Payment Method</label>
+                            <select class="form-control" id="addPaymentMethod" required>
+                                <option value="Cash">Cash</option>
+                                <option value="Cheque">Cheque</option>
+                                <option value="Mpesa">Mpesa</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="addRefNumber">Ref Number</label>
+                            <input type="text" class="form-control" id="addRefNumber" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Add Savings</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Import Savings Modal -->
+    <div class="modal fade" id="importSavingsModal" tabindex="-1" role="dialog" aria-labelledby="importSavingsModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="importSavingsModalLabel">Import Savings</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="importSavingsForm">
+                        <div class="form-group">
+                            <label for="csvFile">Upload CSV File</label>
+                            <input type="file" class="form-control-file" id="csvFile" accept=".csv" required>
+                        </div>
+                        <button type="submit" class="btn btn-secondary">Import Savings</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- jQuery and Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+    $(document).ready(function() {
+    // Handle Add Savings Form Submission
+    $('#addSavingsForm').submit(function(event) {
+    event.preventDefault(); // Prevent the default form submission
+    const savingsData = {
+        idNumber: $('#addIdNumber').val(),
+        memberName: $('#addMemberName').val(), // New field
+        contact: $('#addContact').val(), // New field
+        servedBy: $('#addServedBy').val(),
+        amount: $('#addAmount').val(),
+        dateReceived: $('#addDateReceived').val(),
+        paymentMethod: $('#addPaymentMethod').val(),
+        refNumber: $('#addRefNumber').val()
+    };
+
+    // Send data to the server
+    fetch('/add-savings', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(savingsData)
+    })
+    .then(response => {
+        if (!response.ok) throw new Error('Network response was not ok');
+        return response.json();
+    })
+    .then(data => {
+        console.log('Success:', data);
+        $('#addSavingsModal').modal('hide'); // Hide the modal
+        loadSavings(); // Reload the savings table
+        alert('Savings added successfully!'); // Show success message
+    })
+    .catch(error => {
+        console.error('Error adding savings:', error);
+        alert('Error adding savings. Please try again.'); // Show error message
+    });
+});
+
+    // Load savings on page load
+        loadSavings();
+    });
+
+    // Function to load savings records into the table
+    function loadSavings() {
+        fetch('/get-savings')
+        .then(response => response.json())
+        .then(data => {
+            const tableBody = $('#savingsTableBody');
+            tableBody.empty(); // Clear existing records
+            data.forEach(record => {
+                tableBody.append(`
+                    <tr>
+                        <td>${record.idNumber}</td>
+                        <td>${record.memberName}</td>
+                        <td>${record.contact}</td>
+                        <td>${record.servedBy}</td>
+                        <td>${record.refNumber}</td>
+                        <td>${record.amount}</td>
+                        <td>${record.dateReceived}</td>
+                        <td>
+                            <button class="btn btn-warning btn-sm" onclick="openUpdateModal('${record.idNumber}')">Update</button>
+                            <button class="btn btn-danger btn-sm" onclick="withdrawSavings('${record.idNumber}')">Withdraw</button>
+                        </td>
+                    </tr>
+                `);
+            });
+        })
+        .catch(error => console.error('Error loading savings:', error));
+    }
+</script>
+</body>
+</html>

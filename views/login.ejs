@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>DanjamSacco</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" rel="stylesheet" />
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
+    <!-- MDB -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.10.2/mdb.min.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../include/css/style.css">
+</head>
+
+<style>
+body {font-family: Arial, Helvetica, sans-serif;}
+form {border: 3px solid #f1f1f1;}
+
+main#main {
+    width: 100%;
+    height: calc(100%);
+    background: url('/img/background.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+input[type=text], input[type=password] {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border-radius: 6px;
+    box-sizing: border-box;
+}
+
+button {
+    background-color: #00a859;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border-radius: 6px;
+    cursor: pointer;
+    width: 100%;
+}
+
+button:hover {
+    opacity: 0.8;
+}
+
+.cancelbtn {
+    width: auto;
+    padding: 10px 18px;
+    background-color: #f44336;
+}
+
+.imgcontainer {
+    text-align: center;
+    margin: auto;
+    font-size: 8rem;
+    background: white;
+	border-radius: 50%;
+    color: #000000b3;
+    z-index: 10;
+    text-align: center;
+}
+
+img.avatar {
+    width: 40%;
+}
+
+.logo {
+    margin: auto;
+    font-size: 8rem;
+    background: white;
+	border-radius: 50%;
+    color: #000000b3;
+    z-index: 10;
+    text-align: center;
+}
+
+.container {
+    padding: 16px;
+}
+
+span.psw {
+    float: right;
+    padding-top: 16px;
+}
+
+/* Change styles for span and cancel button on extra small screens */
+@media screen and (max-width: 300px) {
+    span.psw {
+        display: block;
+        float: none;
+    }
+}
+</style>
+
+<body>
+<div class="container col-md-4 p-6 bg-light" style="border: 3px solid #f1f1f1;">
+    <div class="logo">
+        <img src="./img/securelogo.png" width="350px">
+    </div>
+    <div id="LoginForm">     
+        <form action="/login" method="POST"> <!-- Update action to point to your login route -->
+            <div class="container">
+                <label>Username</label>
+                <input type="text" id="username" name="username" placeholder="Username" required><br>
+
+                <label>Password</label>
+                <input type="password" id="password" name="password" placeholder="Password" required><br>
+
+                <button type="submit" name="submit" value="login">Login</button>
+            </div>
+
+            <div class="container" style="background-color:#f1f1f1">
+                <div class="row">
+                    <div class="col text-center">
+                        <input type="checkbox" onclick="showpwd()">Show Password
+                    </div>
+                    <div class="col text-primary">
+                        <a href="#" onclick="Switch()">Forgot password?</a>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    
+    <div id="ResetForm" style="display:none;">
+        <label>Username</label>
+        <form action="include/action.php" method="POST">
+            <input type="text" id="userid" name="userid" placeholder="User ID Number or Email Address">
+            <button type="submit" name="submit" value="reset">Reset</button>
+        </form>
+    </div>
+</div>
+
+<script>
+function showpwd() {
+    var x = document.getElementById("password");
+    if (x.type === "password") {
+        x.type = "text";
+    } else {
+        x.type = "password";
+    }
+} 
+
+function Switch(){
+    document.getElementById("LoginForm").style.display = "none";
+    document.getElementById("ResetForm").style.display = "block";
+}
+</script>
+
+</body>
+</html>

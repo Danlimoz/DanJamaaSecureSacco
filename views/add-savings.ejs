@@ -1,0 +1,27 @@
+app.post('/add-savings', async (req, res) => {
+    try {
+        const { idNumber, memberName, contact, servedBy, amount, dateReceived, paymentMethod, refNumber } = req.body;
+
+        // Validate input data
+        if (!idNumber || !memberName || !contact || !servedBy || !amount || !dateReceived || !paymentMethod || !refNumber) {
+            return res.status(400).json({ message: 'All fields are required.' });
+        }
+
+        const newSavings = new SavingsModel({
+            idNumber,
+            memberName,
+            contact,
+            servedBy,
+            amount,
+            dateReceived,
+            paymentMethod,
+            refNumber
+        });
+
+        await newSavings.save(); // Save the new record to the database
+        res.status(201).json({ message: 'Savings record added successfully', savings: newSavings });
+    } catch (error) {
+        console.error('Error adding savings record:', error);
+        res.status(500).json({ message: 'Error adding savings record', error });
+    }
+});

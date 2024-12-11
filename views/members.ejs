@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registered Members</title>
+    <link rel="stylesheet" href="/public/styles.css"> <!-- Corrected -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"> 
+    <style>
+        /* Basic styles for the sidebar */
+        body {
+            overflow-x: hidden; /* Prevent horizontal scroll */
+        }
+        .dashboard-container {
+            display: flex;
+        }
+        .sidebar {
+            height: 100vh;
+            width: 250px; /* Width of the sidebar */
+            position: fixed; /* Keep sidebar fixed */
+            left: 0; /* Show sidebar */
+            background-color: #343a40; /* Dark background */
+            color: white;
+            padding-top: 20px;
+        }
+        .sidebar .menu {
+            list-style-type: none;
+            padding: 0;
+        }
+        .sidebar .menu li {
+            padding: 15px;
+        }
+        .sidebar .menu li a {
+            color: white;
+            text-decoration: none;
+        }
+        .sidebar .menu li a:hover {
+            background-color: #495057; /* Darker background on hover */
+        }
+        .main-content {
+            margin-left: 250px; /* Adjust margin to accommodate sidebar */
+            padding: 20px;
+            flex-grow: 1;
+        }
+        .toggle-btn {
+            display: none; /* Hide toggle button since sidebar is static */
+        }
+    </style>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script> 
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script> 
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script> 
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <div class="sidebar" id="sidebar">
+            <div class="logo">
+                <img src="/img/securelogo.png" alt="Logo"> <!-- Ensure this path is correct -->
+            </div>
+            <ul class="menu">
+                <li><a href="/dashboard" class="active">Dashboard</a></li>
+                <li><a href="/members">Members</a></li>
+                <li><a href="/loans">Loans</a></li>
+                <li><a href="/savings">Savings</a></li>
+                <li><a href="/products">Products</a></li>
+                <li><a href="/expenses">Expenses</a></li>
+                <li><a href="/reports">Reports</a></li>
+                <li><a href="/sms">SMS</a></li>
+                <li><a href="/emails">Emails</a></li>
+            </ul>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content" id="mainContent">
+            <header class="header">
+                <h1>Registered Members</h1>
+                <button class="new-member-btn" onclick="window.location.href='/register-member'">New Member</button>
+                <input type="text" class="search-bar" placeholder="Search...">
+            </header>
+
+            <div class="table-container">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Member Name</th>
+                            <th>Contact</th>
+                            <th>Gender</th>
+                            <th>Position</th>
+                            <th>Next of Kin</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% members.forEach(member => { %>
+                            <tr>
+                                <td><%= member.fullName %></td>
+                                <td><%= member.phoneLine %></td>
+                                <td><%= member.gender %></td>
+                                <td><%= member.position %></td>
+                                <td><%= member.nextOfKin || 'N/A' %></td>
+                                <td><%= member.status %></td>
+                            </tr>
+                        <% }) %>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Removed toggle functionality since the sidebar is now static
+    </script>
+</body>
+</html>

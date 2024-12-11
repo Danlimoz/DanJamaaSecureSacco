@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Member Registration</title>
+    <link rel="stylesheet" href="/public/styles.css"> <!-- Link to your CSS file -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa; /* Light background color */
+            font-family: Arial, sans-serif;
+        }
+        .registration-container {
+            max-width: 600px; /* Set a max width for the form */
+            margin: 50px auto; /* Center the form */
+            padding: 20px; /* Add padding */
+            background-color: #ffffff; /* White background for the form */
+            border-radius: 10px; /* Rounded corners */
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+            border: 2px solid #007bff; /* Blue border */
+        }
+        h1 {
+            text-align: center; /* Center the heading */
+            color: #007bff; /* Blue color for the heading */
+        }
+        input, select {
+            width: 100%; /* Full width inputs */
+            padding: 10px; /* Padding for inputs */
+            margin: 10px 0; /* Margin for spacing */
+            border: 1px solid #ced4da; /* Light border */
+            border-radius: 5px; /* Rounded corners for inputs */
+        }
+        button {
+            background-color: #007bff; /* Blue button */
+            color: white; /* White text */
+            border: none; /* No border */
+            padding: 10px; /* Padding for button */
+            border-radius: 5px; /* Rounded corners for button */
+            cursor: pointer; /* Pointer cursor on hover */
+            width: 100%; /* Full width button */
+        }
+        button:hover {
+            background-color: #0056b3; /* Darker blue on hover */
+        }
+    </style>
+</head>
+<body>
+    <div class="registration-container">
+        <h1>Member Registration Form</h1>
+        <form action="/register-member" method="POST">
+            <input type="text" name="fullName" placeholder="Full Name" required>
+            <input type="text" name="idNumber" placeholder="ID Number" required>
+            <input type="text" name="kraPin" placeholder="KRA Pin" required>
+            <input type="text" name="phoneLine" placeholder="Phone Line" required>
+            <input type="email" name="email" placeholder="Email" required>
+            <input type="text" name="username" placeholder="Username" required>
+            <input type="text" name="occupation" placeholder="Occupation" required>
+            <input type="date" name="dob" placeholder="Date of Birth" required>
+            <input type="text" name="county" placeholder="County" required>
+            <input type="text" name="constituency" placeholder="Constituency" required>
+            <input type="text" name="ward" placeholder="Ward" required>
+            <input type="text" name="physicalAddress" placeholder="Physical Address" required>
+            <select name="gender" required>
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+            </select>
+            <select name="position" required>
+                <option value="member">Member</option>
+                <option value="admin">Admin</option>
+            </select>
+            <button type="submit">Register</button>
+        </form>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

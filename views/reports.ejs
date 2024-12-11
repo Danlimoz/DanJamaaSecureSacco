@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reports Page</title>
+    <link rel="stylesheet" href="styles.css"> <!-- Link to your CSS file -->
+</head>
+<body>
+    <div class="container">
+        <h1>Reports Page</h1>
+        
+        <nav>
+            <ul class="submenu">
+                <li><a href="#activeLoans">Active Loans</a></li>
+                <li><a href="#closedLoans">Closed Loans</a></li>
+                <li><a href="#loansSummary">Loans Summary</a></li>
+                <li><a href="#savingsReport">Savings Report</a></li>
+                <li><a href="#productsReport">Products Report</a></li>
+            </ul>
+        </nav>
+
+        <section id="loansSummary">
+            <h2>Loan Summary Report</h2>
+            <button id="printButton">Print Summary Report</button>
+            <table id="loanSummaryTable">
+                <thead>
+                    <tr>
+                        <th>Member Name</th>
+                        <th>Duration</th>
+                        <th>Disbursement Date</th>
+                        <th>First Installment Date</th>
+                        <th>Status</th>
+                        <th>Loan Amount</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Loan summary data will be populated here -->
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="5"><strong>Total Amount Disbursed:</strong></td>
+                        <td id="totalDisbursed"></td>
+                    </tr>
+                </tfoot>
+            </table>
+        </section>
+    </div>
+
+    <script src="script.js"></script> <!-- Link to your JavaScript file -->
+</body>
+</html>
